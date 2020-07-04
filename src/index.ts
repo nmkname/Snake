@@ -1,6 +1,6 @@
 import { Container } from "typedi";
 
-import { FIELD_SIZE, CELL_SIZE, SNAKE_VELOCITY } from "const";
+import { FIELD_SIZE, CELL_SIZE, SNAKE_INITIAL_PARAMS } from "const";
 import { Field } from "Field";
 import { Snake } from "entities/Snake";
 
@@ -16,7 +16,10 @@ class Main {
     // it has to be defined before snake, because uses field container
     this.field = new Field({ canvas, FIELD_SIZE, CELL_SIZE });
     Container.set("Field", this.field);
-    this.snake = new Snake();
+    this.snake = new Snake({
+      start: { x: SNAKE_INITIAL_PARAMS.x, y: SNAKE_INITIAL_PARAMS.y },
+      snakeLength: SNAKE_INITIAL_PARAMS.length,
+    });
     this.draw();
   }
 
@@ -24,7 +27,7 @@ class Main {
     const intervalId = setInterval(() => {
       this.field.draw();
       this.snake.draw();
-    }, SNAKE_VELOCITY);
+    }, SNAKE_INITIAL_PARAMS.velocity);
   }
 }
 
