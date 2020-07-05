@@ -1,5 +1,6 @@
-import { Field } from "Field";
 import Container from "typedi";
+
+import { Field } from "Field";
 import { FIELD_SIZE } from "const";
 
 type TParams = {
@@ -158,8 +159,14 @@ export class Snake {
     for (let i = 0; i < this.folds.length; i++) {
       const { bodyIndex, vX, vY, xPos, yPos } = this.folds[i];
 
-      if (_bodyIndex >= bodyIndex) {
-        return { vX, vY, xPos, yPos, relevantIndex: _bodyIndex - bodyIndex };
+      if (_bodyIndex > bodyIndex) {
+        return {
+          vX,
+          vY,
+          xPos,
+          yPos,
+          relevantIndex: _bodyIndex - bodyIndex - 1,
+        };
       }
     }
 
@@ -172,6 +179,5 @@ export class Snake {
     this.makeStep();
     this.drawSnake();
     this.changeFolds();
-    ctx.fillRect(this.X, this.Y, CELL_SIZE, CELL_SIZE);
   }
 }
